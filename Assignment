@@ -1,0 +1,55 @@
+1. Explain the core components of flume.
+
+The core components of Flume are
+Event:
+An event is the basic unit of data flow that flows through the flume agent.
+It flows from source-channel-sink.
+It has the payload of byte array to be transported.
+
+Source:
+This is the component of agent.
+It is a medium through which data enters Flume workflows.
+A source in Flume produces events and delivers them to one or more channels.
+
+Sink:
+It transfers the data to the destination, (mostly hdfs).
+
+Channel:
+It is the medium between the source and the sink.
+It buffers the events until they are forwarded to the sink.
+
+Agent:
+ A Flume agent is a (JVM) process that hosts the components through which events flow from an external source to the next destination (hop).
+  Agents are configured to run a collection of particular sources and sinks.
+A Flume agent can be started with the flume-ng command.
+
+2. Can flume provide 100% reliability while transfering the data.
+
+Yes, Apache Flume provides end to end reliability because of its transactional approach in data flow.
+Transactional Approach:
+When a message moves from one agent to another, two transactions are started, one on the agent that delivers the event and the other on the agent that receives the event. 
+In order for the sending agent to commit it’s transaction, it must receive success indication from the receiving agent. The receiving agent only returns a success indication if it’s own transaction commits properly first. 
+This guarantees 100% reliable delivery semantics between the hops that the flow makes.
+
+3.Explain the consolidation in flume.
+
+In Flume the flume source can collect data from from different data flow.
+Also from different flume agent and consolidate it and transfer it through channel to the sink to the hdfs.
+
+ex: src--channel---sink
+                        *
+    src--channel---sink --* src--channel--sink-----hdfs
+                        *
+    src--channel---sink      
+    
+4. Explain what is an event in flume.
+    An event is a unit of data flow that flows through the flume agent.
+    It flows from source-channel-sink.
+    A source in Flume produces events and delivers
+    them to the channel, which stores the events until they are forwarded to the sink. 
+  
+
+5. Explain what is an agent in flume.
+  A Flume agent is a (JVM) process that hosts the components through which events flow from an external source to the next destination (hop).
+  Agents are configured to run a collection of particular sources and sinks.
+A Flume agent can be started with the flume-ng command.
